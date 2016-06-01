@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>N Trading</title>
+    <link rel="stylesheet" type="text/css" href="normalize.css">
+    <!--<link rel="stylesheet" type="text/css" href="bootstrap.css">-->
+    <!--<link rel="stylesheet" type="text/css" href="main.css">-->
+    <link rel="stylesheet" type="text/css" href="responsive.css.css">
+    <!--<script type="application/javascript" src="bootstrap/js/bootstrap.js"></script>-->
+    <script type="application/javascript" src="jquery/jquery.js"></script>
+    <!-- Global Setting -->
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        body {
+            box-shadow: 0 2px 5px #e0e0e0;
+        }
+
+        header, nav, footer, section, article, div {
+            box-sizing: border-box;
+        }
+
+    </style>
+    <!-- Main Header -->
+    <style>
+        .main__header {
+            width: 100%;
+            min-height: 52px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+        }
+
+        .main__header__inner {
+            width: 100%;
+        }
+
+        .main__header__image {
+            height: 40px;
+            margin-top: 10px;
+            margin-left: 5px;
+            vertical-align: top;
+        }
+
+        .main__header__title {
+            font-weight: 300;
+            font-size: 2em;
+            margin: 0.5em 0.25em;
+            display: inline-block;
+            color: #212121;
+        }
+
+        a#menu {
+            display: inline-block;
+            position: absolute;
+            right: 0;
+            padding: 1em;
+        }
+
+        svg {
+            width: 32px;
+            fill: #e0e0e0;
+        }
+
+    </style>
+
+    <!-- nav -->
+    <style>
+        #main__nav {
+            z-index: 10;
+            background-color: #fff;
+            width: 300px;
+            position: absolute;
+            -webkit-transform: translate(-300px, 0);
+            transform: translate(-300px, 0);
+            transition: transform 0.3s ease;
+            margin-top: 5px;
+        }
+
+        #main__nav.open {
+            -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+        }
+
+        .nav__list {
+            overflow: hidden;
+        }
+
+        .nav__item {
+            display: list-item;
+            border-bottom: 1px solid #E0E0E0;
+            width: 100%;
+            text-align: left;
+            line-height: 24px;
+            padding: 24px;
+        }
+
+        #main__nav a {
+            text-decoration: none;
+            color: #616161;
+            padding: 1.5em;
+        }
+
+        /*#main__nav {*/
+        /*display: none;*/
+        /*width: 100%;*/
+        /*border-bottom: 1px solid rgba(155, 155, 155, 1);*/
+        /*}*/
+
+        /*#main__nav > ul {*/
+        /*width: 100%;*/
+        /*display: block;*/
+        /*text-align: center;*/
+        /*}*/
+
+        /*#main__nav > ul > li {*/
+        /*width: 30%;*/
+        /*display: inline-block;*/
+        /*padding: 24px;*/
+        /*line-height: 24px;*/
+        /*box-sizing: border-box;*/
+        /*}*/
+
+        /*#main__nav > ul > li > a {*/
+        /*padding: 1.5em;*/
+        /*cursor: auto;*/
+        /*}*/
+
+    </style>
+
+    <!-- section -->
+    <style>
+        section {
+            padding: 20px;
+        }
+
+        .main__section {
+            overflow: hidden;
+        }
+
+        .main__list {
+            /*height: 200px;*/
+        }
+
+        ul.stock_list {
+            /*height: 200px;*/
+            overflow-y: scroll;
+        }
+    </style>
+
+    <!-- footer -->
+    <style>
+        footer {
+            /*border: 1px solid black;*/
+            border-top: 1px solid #e0e0e0;
+            width: 100%;
+            padding: 1em;
+            box-sizing: border-box;
+        }
+
+        footer ul {
+            display: block;
+        }
+
+        footer li {
+            display: inline-block;
+        }
+
+        footer a {
+            color: #333;
+            padding: 1em;
+        }
+
+
+    </style>
+    <script>
+        function showlists() {
+//            $("div").text("Loading...");
+            $.getJSON('/api/lists', function (companyList) {
+                var list = $('.stock_list');
+                $.each(companyList, function (i, companyInfo) {
+                    var html = '<li> ' + companyInfo.name + ' </li>';
+                    list.append(html);
+                });
+                $('.loading').hide();
+            });
+        }
+
+        $(function () {
+            $('#menu').click(function (ev) {
+                $('#main__nav').toggleClass('open');
+                ev.stopPropagation();
+            });
+            $('main').click(function (ev) {
+                $('#main__nav').removeClass('open');
+            });
+
+            showlists();
+        });
+    </script>
+</head>
+<body>
+<header class="main__header">
+    <div class="main__header__inner">
+        <img class="main__header__image" src="images/city.png" alt="main header image"/>
+        <h1 class="main__header__title">
+            Neo Trader
+        </h1>
+        <a id="menu" class="header__menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z"></path>
+            </svg>
+        </a>
+    </div>
+</header>
+<nav id="main__nav">
+    <ul class="nav__list">
+        <li class="nav__item"><a href="#">Stock List</a></li>
+        <li class="nav__item"><a href="#">Stock Analysis</a></li>
+        <li class="nav__item"><a href="#">Help</a></li>
+    </ul>
+</nav>
+<main>
+    <section>
+        <div class="main__section">
+            <h1>
+                stock list
+            </h1>
+
+            <img class="loading" src="/img/loading.gif">
+            <div class="main__list">
+                <ul class="stock_list">
+                </ul>
+            </div>
+        </div>
+
+        <!--<p>Lorem ipsum dolor sit amet, aenean consequat fusce non mauris lorem, lacinia wisi vivamus phasellus viverra-->
+        <!--nullam quam, vestibulum vel commodo aliquam praesent euismod. Sapien molestie morbi a. Nibh sapien nulla sed-->
+        <!--praesent. Mi justo dictumst delectus nam et ut, sodales eu porta tempus pede proin, neque ornare, odio in-->
+        <!--mauris eu elit rutrum quis, tempor faucibus. Dis commodo ullamcorper platea ultrices sit. Luctus dolor neque-->
+        <!--ipsum scelerisque varius, metus cras sapien id pharetra ornare. Eget massa ut nulla nec mollis nisl,-->
+        <!--maecenas tempor ligula odio varius sociis, vel quis in nulla, wisi porttitor pede non, mollis proin-->
+        <!--vestibulum elit duis. Fusce ut lectus porttitor mollis facilisis, integer congue nec posuere libero leo-->
+        <!--volutpat, et placerat lacinia in amet. Sit ipsum maecenas nulla faucibus amet, tincidunt tristique curabitur-->
+        <!--fringilla vitae eu, nibh luctus sollicitudin. In tellus vel nibh felis pede molestie, consequat sed eu enim-->
+        <!--pellentesque augue imperdiet, pellentesque diam luctus nisl, sed felis cras class, at quis sapien duis-->
+        <!--tellus. Libero velit sit, dapibus consectetuer sociosqu, viverra morbi pretium sagittis pede viverra erat,-->
+        <!--cum bibendum urna eros. Vestibulum convallis libero.</p>-->
+    </section>
+</main>
+<footer class="main__footer">
+    <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Contact Us</a></li>
+    </ul>
+</footer>
+
+</body>
+</html>

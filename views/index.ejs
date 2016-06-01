@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="dist/bootstrap/dist/css/bootstrap.css">
+    <script type="application/javascript" src="dist/jquery/dist/jquery.js"></script>
+    <script>
+        $(function() {
+//            alert('test');
+        });
+    </script>
+</head>
+<body>
+    <h1>
+        <%= title %>
+    </h1>
+
+    <ul>
+        <% for (var i = 0; i < items.length; i++) { %>
+        <li><%= i + ') ' %><%= items[i].desc %></li>
+        <% } %>
+    </ul>
+
+    <form action="/add" method="post">
+        <input type="text" name="newItem">
+        <input type="submit">
+    </form>
+
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>stock list</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+    <script type="application/javascript" src="/jquery/jquery.js"></script>
+    <script type="application/javascript" src="/bootstrap/js/bootstrap.js"></script>
+    <script>
+        function showlists() {
+            $("div").text("Loading...");
+            $.getJSON('/api/lists', function(companyList) {
+                var list = $('.stock_list');
+                $.each(companyList, function (i, companyInfo) {
+                    var html = '<li> ' + companyInfo.name + ' </li>';
+                    list.append(html);
+                });
+                $('.loading').hide();
+            });
+        }
+
+        $(function () {
+//            alert('test');
+            console.log('showLists');
+            showlists();
+        });
+    </script>
+</head>
+<body>
+<h1>
+    stock list
+</h1>
+
+<img class="loading" src="/img/loading.gif">
+
+<ul class="stock_list">
+</ul>
+
+</body>
+</html>
